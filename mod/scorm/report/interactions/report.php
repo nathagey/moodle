@@ -201,6 +201,10 @@ class scorm_interactions_report extends scorm_default_report {
                     $columns[] = 'right' . $id;
                     $headers[] = get_string('rightanswerx', 'scormreport_interactions', $id);
                 }
+                if ($displayoptions['result']) {
+                    $columns[] = 'result' . $id;
+                    $headers[] = "Result";//get_string('resultx', 'scormreport_interactions', $id);
+                }
             }
 
             if (!$download) {
@@ -233,6 +237,9 @@ class scorm_interactions_report extends scorm_default_report {
                     }
                     if ($displayoptions['right']) {
                         $table->no_sorting('right'.$id);
+                    }
+                    if ($displayoptions['result']) {
+                        $table->no_sorting('result'.$id);
                     }
                 }
 
@@ -511,6 +518,14 @@ class scorm_interactions_report extends scorm_default_report {
                                                 $element = 'cmi.interactions_'.$i.'.correct_responses_'.$j.'.pattern';
                                             }
                                             $row[] = $rightans;
+                                        } else {
+                                            $row[] = '&nbsp;';
+                                        }
+                                    }
+                                    if ($displayoptions['result']) {
+                                        $element='cmi.interactions_'.$i.'.result';
+                                        if (isset($trackdata->$element)) {
+                                            $row[] = s($trackdata->$element);
                                         } else {
                                             $row[] = '&nbsp;';
                                         }
